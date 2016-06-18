@@ -16,6 +16,7 @@ public class StockCleansing {
 		ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		ParameterTool params = ParameterTool.fromArgs(args);
 		String input = params.getRequired("input");
+		String outputFile = params.getRequired("output");
 		final String symbol = params.getRequired("symbol");
 
 		DataSet<Tuple5<String, String, Integer, Double, Date>> output = env.readTextFile(input)
@@ -35,7 +36,8 @@ public class StockCleansing {
 						return input.f0.equals(symbol);
 					}
 				});
-		output.writeAsCsv("output.csv");
+
+		output.writeAsCsv(outputFile);
 		output.print();
 
 	}
